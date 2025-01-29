@@ -1,0 +1,9 @@
+name: sql_sample_script
+run-name: Setting up the hawthorn database
+on: [push]
+jobs:
+  test-output:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test Output
+      run: echo "Here is a test"
