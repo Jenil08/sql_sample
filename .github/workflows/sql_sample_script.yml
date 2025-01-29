@@ -1,15 +1,25 @@
 name: sql_sample_script
 run-name: Setting up the hawthorn database
 on: [push]
+
 jobs:
-  test-output:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Test Output
-      run: echo "Here is a test"
   connect-remote:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Show databases
-      run: mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASE";
+      - uses: actions/checkout@v3
+
+      - name: Debug Secrets
+        run: |
+          echo "DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}"
+          echo "DB_USER=${{ secrets.DB_USER }}"
+      
+      - name: Install MySQL Client
+        run: sudo apt-get install -y mysql-client
+
+      - name: Check MySQL Connection
+        run: |
+          mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "SELECT VERSION();"
+
+      - name: Show Databases
+        run: |
+          mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES;"
