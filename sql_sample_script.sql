@@ -1,1 +1,1 @@
-CREATE DATABASE sql_sample;
+CREATE DATABASE sql_sample1;
