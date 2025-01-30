@@ -2,20 +2,27 @@ name: sql_sample_script
 run-name: Setting up the Jen database
 on: [push]
 jobs:
-  test-output:
+  run-mysql-script:
     runs-on: ubuntu-latest
     steps:
-    - name: Test Output
-      run: echo "Here is a test"
-  connect-remote:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Show databases
-      run: mysql -h ${{secrets.DBHOSTNAME}} --port 3306 -u${{secrets.DBUSER}} -p${{secrets.DBPASSWORD}} -e "SHOW DATABASES";
-    - name: Run a sample SQL on remote
-      run: mysql -h ${{secrets.DBHOSTNAME}} --port 3306 -u${{secrets.DBUSER}} -p${{secrets.DBPASSWORD}} -e "source ./sql_sample/sql_sample_script.sql";
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
+      - name: Debug File Path
+        run: ls -R  # Lists all files to confirm the SQL file exists
 
+      - name: Set File Permissions
+        run: chmod +r ./sql_sample/sql_sample_script.sql
+
+      - name: Install MySQL Client
+        run: sudo apt-get install -y mysql-client
+
+      - name: Run MySQL Script
+        env:
+          MYSQL_HOST: ${{ secrets.DB_HOST }}
+          MYSQL_USER: ${{ secrets.DB_USER }}
+          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          mysql -h $MYSQL_HOST -P 3306 -u $MYSQL_USER -p$MYSQL_PASSWORD -e "source $(pwd)/sql_sample/sql_sample_script.sql"
 
       
