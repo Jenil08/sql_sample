@@ -14,10 +14,4 @@ jobs:
     - name: Show databases
       run: mysql -h ${{secrets.DBHOSTNAME}} --port 3306 -u${{secrets.DBUSER}} -p${{secrets.DBPASSWORD}} -e "SHOW DATABASES";
     - name: Run a sample SQL on remote
-      run: mysql -h ${{secrets.DBHOSTNAME}} --port 3306 -u${{secrets.DBUSER}} -p${{secrets.DBPASSWORD}} -e "source  C:\Users\morej\Documents\my_new_folder\sql_sample\sql_sample_script.sql";
-
-      
-
-
-
-      
+      run: mysql -h ${{secrets.DBHOSTNAME}} --port 3306 -u${{secrets.DBUSER}} -p${{secrets.DBPASSWORD}} -e "source  sql_sample_script.sql";
