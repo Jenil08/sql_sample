@@ -1,1 +1,1 @@
-CREATE DATABASE IF NOT EXISTS sql_sample_new;
+CREATE DATABASE my_sql_script;
