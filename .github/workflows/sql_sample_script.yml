@@ -1,5 +1,5 @@
 name: sql_sample_script
-run-name: Setting up the Jen database
+run-name: Setting up the Hawthorn database
 on: [push]
 jobs:
   test-output:
